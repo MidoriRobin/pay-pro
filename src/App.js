@@ -11,13 +11,17 @@ import Invoice from "./routes/invoice";
 import Success from "./routes/success";
 import MobileBg from "./assets/cloudy-mobile.svg";
 
-const AppWrap = styled.div`
+const AppWrap = styled.main`
   /* Layout */
   display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
 
   /* Presentation */
-  background-color: red;
+  background-image: url(${MobileBg});
+  background-repeat: no-repeat;
+  background-size: 100% 15rem;
 `;
 
 function App() {
@@ -41,6 +45,9 @@ function App() {
       <Router>
         <Switch>
           <UserContext.Provider value={[user, setUser]}>
+            <Route exact path="/">
+              <Home />
+            </Route>
             <Route path="/pay">
               <Payment />
             </Route>
@@ -52,9 +59,6 @@ function App() {
             </Route>
             <Route path="/invoice">
               <Success />
-            </Route>
-            <Route path="/">
-              <Home />
             </Route>
           </UserContext.Provider>
         </Switch>

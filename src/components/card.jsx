@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 const CardWrap = styled.div`
   /* Layout */
@@ -10,8 +11,8 @@ const CardWrap = styled.div`
   justify-content: center;
   height: ${({ custHeight }) => (custHeight ? custHeight : "30rem")};
   width: ${({ custWidth }) => (custWidth ? custWidth : "20rem")};
-  max-height: 40rem;
-  max-width: 20rem;
+  max-height: ${({ isDesktop }) => (isDesktop ? "50rem" : "40rem")};
+  max-width: ${({ isDesktop }) => (isDesktop ? "60rem" : "40rem")};
   /* padding-left: 1rem;
   padding-right: 1rem; */
 
@@ -23,11 +24,12 @@ const CardWrap = styled.div`
   -moz-box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.36);
 `;
 
-const CardCont = styled.div``;
-
 const Card = (props) => {
+  const isDesktop = useMediaQuery("min-width: 1024px");
+
   return (
     <CardWrap
+      isDesktop
       className="card-wrapper"
       custWidth={props.width}
       custHeight={props.height}
@@ -41,6 +43,7 @@ Card.propTypes = {
   children: PropTypes.any,
   width: PropTypes.string,
   height: PropTypes.string,
+  orientation: PropTypes.string,
 };
 
 export default Card;

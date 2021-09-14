@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Card from "../components/card";
 import styled from "@emotion/styled";
 import StripeLogo from "../assets/stripe-seek.svg";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 const PayWrap = styled.div`
   /* Layout */
@@ -12,6 +13,14 @@ const PayWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 20;
+
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: space-between;
+    width: 35rem;
+  }
 
   /* Presentation */
 `;
@@ -31,6 +40,14 @@ const BigBtn = styled.button`
   outline: none;
   border: solid 1px black;
 
+  @media (min-width: 1024px) {
+    width: 12rem;
+    height: 10rem;
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-2);
+  }
+
+  /* Attempting to set up btn backgrounds */
   .large-btn::before {
     position: absolute;
     top: 0;
@@ -44,12 +61,19 @@ const BigBtn = styled.button`
 const HrLine = styled.hr`
   color: black;
   width: 15rem;
+
+  @media (min-width: 1024px) {
+    width: auto;
+    height: 15rem;
+  }
 `;
 
 const Payment = (props) => {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
   return (
     <div>
-      <Card>
+      <Card width={isDesktop ? "50rem" : "20rem"}>
         <PayWrap className="pay-option-wrap">
           <BigBtn className="large-btn" logo={StripeLogo}>
             Stripe

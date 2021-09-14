@@ -24,6 +24,12 @@ const AppWrap = styled.main`
   background-size: 100% 15rem;
 `;
 
+const AppCont = styled.div`
+  @media (min-width: 1024px) {
+    margin: 0 auto;
+  }
+`;
+
 function App() {
   const UserContext = React.createContext();
 
@@ -42,27 +48,29 @@ function App() {
 
   return (
     <AppWrap className="app-wrapper">
-      <Router>
-        <Switch>
-          <UserContext.Provider value={[user, setUser]}>
-            <Route exact path="/">
-              <Payment />
-            </Route>
-            <Route path="/pay">
-              <Home />
-            </Route>
-            <Route path="/success">
-              <Access />
-            </Route>
-            <Route path="/access">
-              <Invoice />
-            </Route>
-            <Route path="/invoice">
-              <Success />
-            </Route>
-          </UserContext.Provider>
-        </Switch>
-      </Router>
+      <AppCont className="app-container">
+        <Router>
+          <Switch>
+            <UserContext.Provider value={[user, setUser]}>
+              <Route exact path="/">
+                <Payment />
+              </Route>
+              <Route path="/pay">
+                <Home />
+              </Route>
+              <Route path="/success">
+                <Access />
+              </Route>
+              <Route path="/access">
+                <Invoice />
+              </Route>
+              <Route path="/invoice">
+                <Success />
+              </Route>
+            </UserContext.Provider>
+          </Switch>
+        </Router>
+      </AppCont>
     </AppWrap>
   );
 }

@@ -46,10 +46,10 @@ function App() {
         <Switch>
           <UserContext.Provider value={[user, setUser]}>
             <Route exact path="/">
-              <Home />
+              <Payment />
             </Route>
             <Route path="/pay">
-              <Payment />
+              <Home />
             </Route>
             <Route path="/success">
               <Access />

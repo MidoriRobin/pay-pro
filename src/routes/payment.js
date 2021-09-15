@@ -38,13 +38,21 @@ const BigBtn = styled.button`
   background-size: contain;
   background-repeat: no-repeat;
   outline: none;
-  border: solid 1px black;
+  border: none;
+  transition: all 0.5s;
+  border-radius: 0.5rem;
+  font-weight: var(--font-weight-2);
+
+  :hover {
+    cursor: pointer;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
 
   @media (min-width: 1024px) {
     width: 12rem;
     height: 10rem;
     font-size: 1.5rem;
-    font-weight: var(--font-weight-2);
   }
 
   /* Attempting to set up btn backgrounds */

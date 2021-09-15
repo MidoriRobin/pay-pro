@@ -10,6 +10,7 @@ import Access from "./routes/access";
 import Invoice from "./routes/invoice";
 import Success from "./routes/success";
 import MobileBg from "./assets/cloudy-mobile.svg";
+import DesktopBg from "./assets/cloudy.svg";
 
 const AppWrap = styled.main`
   /* Layout */
@@ -22,6 +23,18 @@ const AppWrap = styled.main`
   background-image: url(${MobileBg});
   background-repeat: no-repeat;
   background-size: 100% 15rem;
+
+  @media (min-width: 1024px) {
+    background-image: url(${DesktopBg});
+    background-size: auto;
+    background-position: top;
+  }
+
+  @media (min-width: 1441px) {
+    background-image: url(${DesktopBg});
+    background-size: cover;
+    background-position: top;
+  }
 `;
 
 const AppCont = styled.div`
@@ -53,19 +66,19 @@ function App() {
           <Switch>
             <UserContext.Provider value={[user, setUser]}>
               <Route exact path="/">
-                <Payment />
-              </Route>
-              <Route path="/pay">
                 <Home />
               </Route>
+              <Route path="/pay">
+                <Payment />
+              </Route>
               <Route path="/success">
-                <Access />
+                <Success />
               </Route>
               <Route path="/access">
-                <Invoice />
+                <Access />
               </Route>
               <Route path="/invoice">
-                <Success />
+                <Invoice />
               </Route>
             </UserContext.Provider>
           </Switch>

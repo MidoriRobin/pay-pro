@@ -30,14 +30,12 @@ const Access = (props) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   return (
-    <div>
       <Card width={isDesktop ? "50rem" : "20rem"}>
         <AccessWrap>
           <h2>Access Email Sent!</h2>
           <img src={MailSvg} alt="Mail Image" />
         </AccessWrap>
       </Card>
-    </div>
   );
 };
 

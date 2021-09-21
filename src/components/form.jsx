@@ -16,8 +16,8 @@ const InputCont = styled.div`
     height: 1.5rem;
     width: 13rem;
     border: none;
-    background-color: #c4c4c4;
-    opacity: 0.11;
+    background-color: #f9f9f9;
+    ${'' /* opacity: 0.11; */}
   }
 `;
 
@@ -52,9 +52,16 @@ const Form = (props) => {
   const [formField, setFormField] = useState({});
   const [email, setEmail] = useState("");
 
+  const emailRgx = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/)
+
   function handleSubmit(event) {
-    event.preventDefault;
-    return "submitted";
+    event.preventDefault();
+    if (!(!emailRgx.test(email) || email === "")) {
+      props.passEmail(email);
+    } else {
+      // TODO: Switch this out for an actual error response
+      alert("Please enter an email")
+    }
   }
 
   function handleEmail(event) {
@@ -74,6 +81,8 @@ const Form = (props) => {
   );
 };
 
-Form.propTypes = {};
+Form.propTypes = {
+  passEmail: PropTypes.func
+};
 
 export default Form;

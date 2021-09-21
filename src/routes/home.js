@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from "@emotion/styled";
-import React from "react";
+import { Magic } from "magic-sdk";
+import React, { useState } from "react";
 import Card from "../components/card";
 import Form from "../components/form";
 import logo from "../logo.svg";
@@ -29,33 +30,28 @@ const LoginArea = styled.div`
  */
 
 const Home = () => {
-  const AppScaff = (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const [ email, setEmail ] = useState("");
+
+  const magic = new Magic(`${process.env.REACT_APP_MAGIC_API_SK}`);
+ 
+  function loadEmailToSubmit(email) {
+    setEmail(email)
+    console.log(`${email}`)
+  }
 
   function NavTo(params) {}
+
+  async function handleLoginWithMagic(email) {
+    const didToken = await magic.auth.loginWithMagicLink({})
+  }
 
   return (
     <HomeWrap className="home-wrapper">
       <Card width="20rem" height="20rem">
         <LoginArea>
           <h2>Company Name</h2>
-          <Form />
+          <Form passEmail={loadEmailToSubmit} />
         </LoginArea>
       </Card>
     </HomeWrap>

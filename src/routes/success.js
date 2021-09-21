@@ -35,7 +35,6 @@ const Success = (props) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   return (
-    <div>
       <Card width={isDesktop ? "50rem" : "20rem"}>
         <SuccessCont className="success-cont">
           <h2>Purchase success!</h2>
@@ -43,7 +42,6 @@ const Success = (props) => {
           <h4>Access Link Sent To Email</h4>
         </SuccessCont>
       </Card>
-    </div>
   );
 };
 

@@ -80,7 +80,6 @@ const Payment = (props) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   return (
-    <div>
       <Card width={isDesktop ? "50rem" : "20rem"}>
         <PayWrap className="pay-option-wrap">
           <BigBtn className="large-btn" logo={StripeLogo}>
@@ -90,7 +89,6 @@ const Payment = (props) => {
           <BigBtn>Paypal</BigBtn>
         </PayWrap>
       </Card>
-    </div>
   );
 };
 

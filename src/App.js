@@ -48,7 +48,7 @@ function App() {
 
   const [user, setUser] = useState({});
 
-  const magic = new Magic(`${process.env.REACT_APP_MAGIC_API_SK}`);
+  const magic = new Magic(`${process.env.REACT_APP_MAGIC_API_PK}`);
 
   useEffect(() => {
     setUser({ loading: true });
@@ -59,6 +59,10 @@ function App() {
     });
   }, []);
 
+  function loadUser(user) {
+    setUser(user);
+  }
+
   return (
     <AppWrap className="app-wrapper">
       <AppCont className="app-container">
@@ -66,7 +70,7 @@ function App() {
           <Switch>
             <UserContext.Provider value={[user, setUser]}>
               <Route exact path="/">
-                <Home />
+                <Home loadUser={loadUser} />
               </Route>
               <Route path="/pay">
                 <Payment />

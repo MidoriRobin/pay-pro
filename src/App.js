@@ -2,8 +2,8 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Magic } from "magic-sdk";
 import styled from "@emotion/styled";
+import { magic } from "./lib/magic";
 import Home from "./routes/home";
 import Payment from "./routes/payment";
 import Access from "./routes/access";
@@ -11,6 +11,8 @@ import Invoice from "./routes/invoice";
 import Success from "./routes/success";
 import MobileBg from "./assets/cloudy-mobile.svg";
 import DesktopBg from "./assets/cloudy.svg";
+
+export const UserContext = React.createContext();
 
 const AppWrap = styled.main`
   /* Layout */
@@ -44,11 +46,7 @@ const AppCont = styled.div`
 `;
 
 function App() {
-  const UserContext = React.createContext();
-
   const [user, setUser] = useState({});
-
-  const magic = new Magic(`${process.env.REACT_APP_MAGIC_API_PK}`);
 
   useEffect(() => {
     setUser({ loading: true });

@@ -1,13 +1,14 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import styled from "@emotion/styled";
-import { Magic } from "magic-sdk";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import Card from "../components/card";
 import Form from "../components/form";
 import logo from "../logo.svg";
+import { UserContext } from "../App";
+import { magic } from "../lib/magic";
 
 const HomeWrap = styled.div`
   /* Layout */
@@ -33,11 +34,15 @@ const LoginArea = styled.div`
  */
 
 const Home = (props) => {
+  const userContext = useContext(UserContext);
   const [email, setEmail] = useState("");
   let history = useHistory();
 
-  // eslint-disable-next-line no-undef
-  const magic = new Magic(`${process.env.REACT_APP_MAGIC_API_PK}`);
+  useEffect(() => {
+    if (!userContext.user?.loading) {
+      history.push("/invoice");
+    }
+  }, []);
 
   function loadEmailToSubmit(email) {
     setEmail(email);
@@ -121,6 +126,10 @@ const Home = (props) => {
     return isPresent;
   }
 
+  /**
+   * Handles processing of login
+   * @param {*} email
+   */
   async function processLogin(email) {
     const checkResult = await checkEmail(email);
 

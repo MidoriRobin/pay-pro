@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "@emotion/styled";
 import { magic } from "./lib/magic";
@@ -12,7 +12,7 @@ import Success from "./routes/success";
 import MobileBg from "./assets/cloudy-mobile.svg";
 import DesktopBg from "./assets/cloudy.svg";
 
-export const UserContext = React.createContext();
+export const UserContext = createContext(null);
 
 const AppWrap = styled.main`
   /* Layout */
@@ -46,7 +46,7 @@ const AppCont = styled.div`
 `;
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
 
   useEffect(() => {
     setUser({ loading: true });
@@ -67,7 +67,7 @@ function App() {
         <Router>
           <Switch>
             <UserContext.Provider value={[user, setUser]}>
-              <Route exact path="/">
+              <Route exact path={["/", "/home"]}>
                 <Home loadUser={loadUser} />
               </Route>
               <Route path="/pay">

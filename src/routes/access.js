@@ -28,7 +28,6 @@ const AccessWrap = styled.div`
 `;
 
 const Access = (props) => {
-  const userInfo = useContext(UserContext);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   return (

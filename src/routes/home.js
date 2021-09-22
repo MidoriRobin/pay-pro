@@ -34,15 +34,16 @@ const LoginArea = styled.div`
  */
 
 const Home = (props) => {
-  const userContext = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [email, setEmail] = useState("");
   let history = useHistory();
 
+  // TODO: add loading state for when context loads user
   useEffect(() => {
-    if (!userContext.user?.loading) {
+    if (user?.email) {
       history.push("/invoice");
     }
-  }, []);
+  }, [user]);
 
   function loadEmailToSubmit(email) {
     setEmail(email);
@@ -76,7 +77,7 @@ const Home = (props) => {
         if (response.status === 200) {
           try {
             const userMetadata = await magic.user.getMetadata();
-            await props.loadUser(userMetadata);
+            await setUser(userMetadata);
             history.push("/invoice");
           } catch (error) {
             console.log(

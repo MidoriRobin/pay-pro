@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Magic } from "magic-sdk";
 import styled from "@emotion/styled";
+import { magic } from "./lib/magic";
 import Home from "./routes/home";
 import Payment from "./routes/payment";
 import Access from "./routes/access";
@@ -11,6 +11,8 @@ import Invoice from "./routes/invoice";
 import Success from "./routes/success";
 import MobileBg from "./assets/cloudy-mobile.svg";
 import DesktopBg from "./assets/cloudy.svg";
+
+export const UserContext = createContext(null);
 
 const AppWrap = styled.main`
   /* Layout */
@@ -44,11 +46,7 @@ const AppCont = styled.div`
 `;
 
 function App() {
-  const UserContext = React.createContext();
-
-  const [user, setUser] = useState({});
-
-  const magic = new Magic(`${process.env.REACT_APP_MAGIC_API_SK}`);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     setUser({ loading: true });
@@ -59,14 +57,18 @@ function App() {
     });
   }, []);
 
+  function loadUser(user) {
+    setUser(user);
+  }
+
   return (
     <AppWrap className="app-wrapper">
       <AppCont className="app-container">
         <Router>
           <Switch>
             <UserContext.Provider value={[user, setUser]}>
-              <Route exact path="/">
-                <Home />
+              <Route exact path={["/", "/home"]}>
+                <Home loadUser={loadUser} />
               </Route>
               <Route path="/pay">
                 <Payment />

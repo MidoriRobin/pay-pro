@@ -7,6 +7,8 @@ import useMediaQuery from "../hooks/useMediaQuery";
 const CardWrap = styled.div`
   /* Layout */
   display: flex;
+  /* TODO: change this to accept props */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: ${({ custHeight }) => (custHeight ? custHeight : "30rem")};

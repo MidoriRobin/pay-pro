@@ -161,20 +161,26 @@ function Checkout(props) {
   const elements = useElements();
 
   useEffect(() => {
-    console.log("Creating payment intent");
-    fetch(`${process.env.REACT_APP_SERVER_URL}/create-pay-intent`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ items: [{ id: "signup" }] }),
-    })
-      .then((res) => {
-        return res.json();
+    try {
+      console.log("Creating payment intent");
+      fetch(`${process.env.REACT_APP_SERVER_URL}/create-pay-intent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: [{ id: "signup" }] }),
       })
-      .then((data) => {
-        setClientSecret(data.clientSecret);
-      });
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setClientSecret(data.clientSecret);
+        });
+    } catch (error) {
+      console.log(
+        `There was an error trying to load the payment intent(page refresh is needed): \n${error}`,
+      );
+    }
   }, []);
 
   const cardStyle = {

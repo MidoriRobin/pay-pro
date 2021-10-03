@@ -1,10 +1,16 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Card from "../components/card";
 import styled from "@emotion/styled";
 import StripeLogo from "../assets/stripe-seek.svg";
 import useMediaQuery from "../hooks/useMediaQuery";
+import Modal from "../components/modal";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import Checkout from "../components/Checkout";
 
 const PayWrap = styled.div`
   /* Layout */
@@ -76,19 +82,37 @@ const HrLine = styled.hr`
   }
 `;
 
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PKEY);
+
 const Payment = (props) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
+  const [open, setOpen] = useState(false);
+
+  function flipModal() {
+    setOpen((prevOpen) => !prevOpen);
+  }
+
+  // TODO: Add modal to page to process checkout for stripe/look into paypal processing
+
   return (
+    <>
+      <Modal flipModal={flipModal} show={open}>
+        <h3>Modal</h3>
+        <Elements stripe={stripePromise}>
+          <Checkout />
+        </Elements>
+      </Modal>
       <Card width={isDesktop ? "50rem" : "20rem"}>
         <PayWrap className="pay-option-wrap">
-          <BigBtn className="large-btn" logo={StripeLogo}>
+          <BigBtn className="large-btn" logo={StripeLogo} onClick={flipModal}>
             Stripe
           </BigBtn>
           <HrLine />
           <BigBtn>Paypal</BigBtn>
         </PayWrap>
       </Card>
+    </>
   );
 };
 

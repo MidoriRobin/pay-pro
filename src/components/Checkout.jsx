@@ -222,7 +222,7 @@ function Checkout(props) {
 
   useEffect(() => {
     if (succeeded) {
-      history.push("/success");
+      props.handleSuccess();
     }
   });
 
@@ -261,6 +261,7 @@ function Checkout(props) {
 
 Checkout.propTypes = {
   props: PropTypes.any,
+  handleSuccess: PropTypes.func,
 };
 
 export default Checkout;

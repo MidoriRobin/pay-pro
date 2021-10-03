@@ -85,7 +85,7 @@ const Home = (props) => {
             );
           }
         } else if (response.status === 202) {
-          history.push("/pay");
+          history.push("/pay", { data: email });
         }
       })
       .catch((error) => {
@@ -139,7 +139,7 @@ const Home = (props) => {
     if (checkResult === true) {
       await handleLoginWithMagic(email);
     } else {
-      history.push("/pay");
+      history.push("/pay", { data: email });
     }
   }
 

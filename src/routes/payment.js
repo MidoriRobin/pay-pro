@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import Card from "../components/card";
 import styled from "@emotion/styled";
@@ -11,6 +11,9 @@ import Modal from "../components/modal";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Checkout from "../components/Checkout";
+import { UserContext } from "../App";
+import { handleLoginWithMagic } from "../lib/helper";
+import { useHistory } from "react-router";
 
 const PayWrap = styled.div`
   /* Layout */
@@ -88,19 +91,41 @@ const Payment = (props) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useContext(UserContext);
+  let history = useHistory();
+
+  const email = history.location.state?.data;
 
   function flipModal() {
     setOpen((prevOpen) => !prevOpen);
   }
 
-  // TODO: Add modal to page to process checkout for stripe/look into paypal processing
+  function handleSuccess() {
+    console.log(`Email of user: ${email}`);
+    setupSignup(email);
+    history.push("/success");
+    // On payment success the user would then be added to a database
+  }
+
+  async function setupSignup(email) {
+    const magicLoginResult = await handleLoginWithMagic(email);
+
+    console.log("magic link for sign up obtained");
+    console.log(JSON.stringify(magicLoginResult));
+    if (magicLoginResult.status === 201) {
+      console.log("User created");
+      console.log("setting user metadata");
+      setUser({ ...magicLoginResult.data });
+      history.push("/invoice");
+    }
+  }
 
   return (
     <>
       <Modal flipModal={flipModal} show={open}>
         <h3>Modal</h3>
         <Elements stripe={stripePromise}>
-          <Checkout />
+          <Checkout handleSuccess={handleSuccess} />
         </Elements>
       </Modal>
       <Card width={isDesktop ? "50rem" : "20rem"}>
